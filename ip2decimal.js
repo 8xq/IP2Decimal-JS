@@ -5,6 +5,8 @@
 
 /*
 This is our main function that will invoke the other 2 functions needed 
+Before the 2 functions are called , this will make a GET request to try and get users IP
+The IP grabber will be used for the place holder text only :)
 Firstly this will check if textbox had any text (true/false)
 if true it will then call the "Validateipv4" function to check if its a valid IP
 if true it will also call IP2NUM function that will convert the IP to decimal / int
@@ -73,5 +75,21 @@ const ValidateIPV4 = (IPV4) => {
 		StatusReport.innerText = "False";
 		StatusReport.style.color = "Red";
 		return false;
+	}
+}
+
+/*
+This is a very basic function that will simply set place holder text on the "IPV4" textbox
+This uses Ipify to grab the IP as it has less limits and easy to parse
+As you can see we use "Json" parse as the response is in JSON
+*/
+const PlaceHolder = () => {
+	var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", "https://api.ipify.org/?format=json", false ); // false for synchronous request
+    xmlHttp.send( null );
+	let Jr = JSON.parse(xmlHttp.responseText);
+	if(Jr.ip){
+		var input = document.getElementById ("IPV4");
+		input.placeholder = "IPV4 address: " + Jr.ip;
 	}
 }
